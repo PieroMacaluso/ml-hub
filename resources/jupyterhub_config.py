@@ -112,6 +112,7 @@ c.JupyterHub.spawner_class = 'mlhubspawner.MLHubDockerSpawner' # override in you
 c.Spawner.image = "mltooling/ml-workspace:0.8.7"
 c.Spawner.workspace_images = [c.Spawner.image, "mltooling/ml-workspace-gpu:0.8.7", "mltooling/ml-workspace-r:0.8.7", "mltooling/ml-workspace-spark:0.8.7"]
 c.Spawner.notebook_dir = '/workspace'
+c.Spawner.volumes = {'/datasets': '/datasets'}
 
 # Connect containers to this Docker network
 c.Spawner.use_internal_ip = True

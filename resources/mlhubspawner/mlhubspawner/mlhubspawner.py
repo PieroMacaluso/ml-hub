@@ -174,7 +174,7 @@ class MLHubDockerSpawner(DockerSpawner):
             # {username} and {servername} will be automatically replaced by DockerSpawner with the right values as in template_namespace
             #volumeName = self.name_template.format(prefix=self.prefix)
             self.highlevel_docker_client.volumes.create(name=self.object_name, labels=self.default_labels)
-            self.volumes = {self.object_name: "/workspace"}
+            self.volumes = {self.object_name: "/workspace", '/media/storage/datasets': '/datasets'}
 
         extra_create_kwargs = {}
         # set default label 'origin' to know for sure which containers where started via the hub

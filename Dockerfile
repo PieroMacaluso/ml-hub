@@ -29,7 +29,7 @@ RUN \
         # workaround for https://bugs.launchpad.net/ubuntu/+source/nodejs/+bug/1794589
         echo nodejs=8.10.0~dfsg-2ubuntu0.2 nodejs-dev=8.10.0~dfsg-2ubuntu0.2 npm; \
       fi') \
-      && \
+      && pip install --upgrade pip && \
    # Cleanup
    clean-layer.sh
 
@@ -80,7 +80,7 @@ RUN \
 # Install JupyterHub
 RUN \
    npm install -g configurable-http-proxy && \
-   python3 -m pip install --no-cache jupyterhub && \
+   python3 -m pip install --no-cache jupyterhub==1.0.0 && \
    # Cleanup
    clean-layer.sh
 
@@ -222,6 +222,10 @@ ENTRYPOINT ["/tini", "-g", "--"]
 
 # Entrypoint must use the array notation, otherwise the entrypoint.sh script does not receive passed cmd arguments (probably because Docker will start it like this: /bin/sh -c /bin/bash /resources/docker-entrypoint.sh <cmd-args>)
 CMD ["/bin/bash", "/resources/docker-entrypoint.sh"]
+
+COPY resources/requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt && clean-layer.sh
 
 # The port on which nginx listens and checks whether it's http(s) or ssh traffic
 EXPOSE 8080
